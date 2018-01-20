@@ -16,6 +16,19 @@ module JobcoinClient
       def address_transactions(address)
         JSON.parse(connection.get("/protozoan/api/addresses/#{address}"))
       end
+
+      def add_transaction(from, to, amount)
+        header = { 'Content-Type' => 'text/json' }
+        payload = {
+          from: from,
+          to: to,
+          amount: amount
+        }
+
+        JSON.parse(connection.post("protozoan/api/transactions")) do
+          payload
+        end
+      end
     end
   end
 end
