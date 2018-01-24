@@ -14,7 +14,7 @@ module JobcoinClient
     attr_reader :connection
 
     def initialize
-      @connection = Requests::Connection.new('http://jobcoin.gemini.com')
+      @connection = ::JobcoinClient::Requests::Connection.new('http://jobcoin.gemini.com')
     end
 
     def transaction_history
