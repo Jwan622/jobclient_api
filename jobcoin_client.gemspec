@@ -10,6 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Client for the Jobcoin API from Gemini.}
   spec.description   = %q{In the event that other people want reuse this client for the JobCoin API, they can!}
+  spec.homepage      = %q{https://github.com/Jwan622/jobclient_api}
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
