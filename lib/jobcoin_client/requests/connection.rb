@@ -6,16 +6,24 @@ module JobcoinClient
       attr_reader :hostname
 
       def initialize(hostname)
-        # remember that net/http does not want the http part
         @hostname = hostname
       end
 
-      def get(uri)
-        Net::HTTP.get(hostname, uri)
+      def get(path)
+        uri = build_uri(path)
+
+        Net::HTTP.get(uri)
       end
 
-      def post(uri, &block)
-        Net::HTTP.post_form(uri, block)
+      def post(path, params)
+        uri = build_uri(path)
+        Net::HTTP.post_form(uri, params)
+      end
+
+      private
+
+      def build_uri(path)
+        URI(hostname + path)
       end
     end
   end

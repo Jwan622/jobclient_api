@@ -1,6 +1,12 @@
 require "jobcoin_client/version"
-require 'jobcoin_client/requests/connection'
-require 'jobcoin_client/requests/jobcoin'
+Dir["./lib/jobcoin_client/requests/*.rb"].each {|file| require file }
+
+# one way to use pry only in development mode. In prod, this will raise a LoadError
+begin
+  require 'pry'
+rescue LoadError => err
+  puts err
+end
 
 module JobcoinClient
 end

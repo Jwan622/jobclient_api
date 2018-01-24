@@ -6,28 +6,30 @@ module JobcoinClient
       attr_reader :connection
 
       def initialize
-        @connection = Connection.new('jobcoin.gemini.com')
+        @connection = Connection.new('http://jobcoin.gemini.com')
       end
 
       def transaction_history
-        JSON.parse(connection.get('/protozoan/api/transactions'))
+        res = connection.get('/protozoan/api/transactions')
+
+        JSON.parse(res)
       end
 
       def address_transactions(address)
-        JSON.parse(connection.get("/protozoan/api/addresses/#{address}"))
+        res = connection.get("/protozoan/api/addresses/#{address}")
+
+        JSON.parse(res)
       end
 
       def add_transaction(from, to, amount)
-        header = { 'Content-Type' => 'text/json' }
         payload = {
-          from: from,
-          to: to,
-          amount: amount
+          'fromAddress' => from,
+          'toAddress' => to,
+          'amount' => amount
         }
 
-        JSON.parse(connection.post("protozoan/api/transactions")) do
-          payload
-        end
+        res = connection.post("/protozoan/api/transactions", payload)
+        JSON.parse(res.body)
       end
     end
   end
