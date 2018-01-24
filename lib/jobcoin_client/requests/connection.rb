@@ -17,6 +17,7 @@ module JobcoinClient
 
       def post(path, params)
         uri = build_uri(path)
+
         Net::HTTP.post_form(uri, params)
       end
 
