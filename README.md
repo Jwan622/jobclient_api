@@ -1,8 +1,6 @@
 # JobcoinClient
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/jobcoin_client`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+A library for interacting with the Jobcoin API.
 
 ## Installation
 
@@ -20,19 +18,51 @@ Or install it yourself as:
 
     $ gem install jobcoin_client
 
+You also need to require the `jobcoin_client` library in your app like this:
+
+```
+require 'jobcoin_client'
+```
+
 ## Usage
 
-TODO: Write usage instructions here
+Three ways to use the gem:
 
-## Development
+1.
+```ruby
+JobcoinClient::Jobcoin.new.transaction_history
+```
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+returns the history all transactions:
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+```
+JobcoinClient::Jobcoin.new.transaction_history
+=> [{"timestamp"=>"2018-01-18T02:57:34.959Z", "toAddress"=>"Alice", "amount"=>"50"}, {"timestamp"=>"2018-01-18T02:57:35.016Z", "fromAddress"=>"Alice", "toAddress"=>"Bob", "amount"=>"12.5"}, {"timestamp"=>"2018-01-18T16:53:16.747Z", "toAddress"=>"50", "amount"=>"50"}, {"timestamp"=>"2018-01-18T16:53:27.572Z", "fromAddress"=>"50", "toAddress"=>"alice", "amount"=>"50"}, {"timestamp"=>"2018-01-18T16:53:38.853Z", "fromAddress"=>"alice", "toAddress"=>"Alice", "amount"=>"50"}, {"timestamp"=>"2018-01-23T23:35:03.792Z", "fromAddress"=>"Alice", "toAddress"=>"alice", "amount"=>"10"}, {"timestamp"=>"2018-01-23T23:35:25.464Z", "fromAddress"=>"Alice", "toAddress"=>"Bob", "amount"=>"1"},
+```
+
+2.
+```ruby
+JobcoinClient::Jobcoin.new.add_transaction(addressFrom, addressTo, amount)
+```
+
+Will send `amount` Jobcoin to the `addressTo` from the `addressFrom`
+
+3.
+```ruby
+JobcoinClient::Jobcoin.new.address_transactions(<someAddressGoesHere>)
+```
+
+Will return this:
+```
+=> {"balance"=>"0.00", "transactions"=>[{"timestamp"=>"2018-01-31T21:34:52.166Z", "fromAddress"=>"52c7ec3135687308f6c2f1cb6d4ecb56a10a96173f10865e6ab212fa6beed273dea64cc2b2253cee4991e836120d", "toAddress"=>"thisIsTheHouseAccount1", "amount"=>"0.2"}, {"timestamp"=>"2018-01-31T21:35:06.903Z", "fromAddress"=>"thisIsTheHouseAccount1", "toAddress"=>"address50", "amount"=>"0.1"}, {"timestamp"=>"2018-01-31T21:35:08.629Z", "fromAddress"=>"thisIsTheHouseAccount1", "toAddress"=>"address51", "amount"=>"0.1"},
+```
+
+The above contains 'balance' and 'transactions' data. The transactions data contains all the transactions
+that the specified address was the sender and the receiver.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/jobcoin_client. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/jwan622/jobcoin_client. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
